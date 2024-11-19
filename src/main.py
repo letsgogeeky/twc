@@ -160,12 +160,12 @@ def clean_trailing_whitespace():
     Remove trailing whitespace from changed lines or the entire codebase.
     """
 
-    version = pkg_resources.get_distribution("twc").version
+    version = pkg_resources.get_distribution("twsc").version
     parser = argparse.ArgumentParser(
         description="A tool to clean trailing whitespace from recently changed lines or an entire codebase.",
         epilog="For more information, visit https://github.com/letsgogeeky/twc"
     )
-    parser.add_argument('--version', action='version', version=f"twc {version}")
+    parser.add_argument('--version', action='version', version=f"twsc {version}")
     parser.add_argument(
         '--force-clean-all', action='store_true',
         help="Force clean the entire codebase even if it's a git repository"

@@ -1,6 +1,6 @@
-# TWC: Trailing Whitespace Cleaner
+# TWSC: Trailing Whitespace Cleaner
 
-TWC (Trailing Whitespace Cleaner) is a Python package designed to clean up trailing whitespace in code files efficiently. It works for files in Git repositories, untracked files, or even entire codebases when not in a Git environment.
+TWSC (Trailing Whitespace Cleaner) is a Python package designed to clean up trailing whitespace in code files efficiently. It works for files in Git repositories, untracked files, or even entire codebases when not in a Git environment.
 
 ---
 
@@ -22,10 +22,10 @@ TWC (Trailing Whitespace Cleaner) is a Python package designed to clean up trail
 
 ## Installation
 
-Install TWC using pip:
+Install TWSC using pip:
 
 ```bash
-pip install twc
+pip install twsc
 ```
 
 ---
@@ -34,10 +34,10 @@ pip install twc
 
 ### Command-Line Interface
 
-Run `twc` from the root of your project directory:
+Run `twsc` from the root of your project directory:
 
 ```bash
-twc
+twsc
 ```
 
 ### Options
@@ -46,14 +46,14 @@ twc
    Use the `--force-clean-all` flag to clean the entire codebase, even if it’s a Git repository:
 
    ```bash
-   twc --force-clean-all
+   twsc --force-clean-all
    ```
 
 2. **Version Information:**
    Check the package version:
 
    ```bash
-   twc --version
+   twsc --version
    ```
 
 ---
@@ -90,7 +90,7 @@ def example_function():
 
 ## Logging
 
-TWC uses Python's `logging` module to provide detailed logs during execution. Logs are printed to the console in the following format:
+TWSC uses Python's `logging` module to provide detailed logs during execution. Logs are printed to the console in the following format:
 
 ```
 2024-11-19 10:45:23 - INFO - Cleaning recently changed files.
@@ -106,8 +106,8 @@ TWC uses Python's `logging` module to provide detailed logs during execution. Lo
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/letsgogeeky/twc.git
-cd twc
+git clone https://github.com/letsgogeeky/twsc.git
+cd twsc
 pip install -r requirements.txt
 python -m unittest discover -s tests
 ```
@@ -138,4 +138,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ---
 
-Feel free to reach out if you have questions or issues with TWC!
+Feel free to reach out if you have questions or issues with TWSC!

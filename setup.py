@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="twc",
-    version="0.9.0",
+    name="twsc",
+    version="0.9.1",
     description="A tool to clean trailing whitespace from recently changed lines or an entire codebase.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -13,7 +13,7 @@ setup(
     python_requires=">=3.7",
     entry_points={
         "console_scripts": [
-            "twc=src.main:clean_trailing_whitespace",
+            "twsc=src.main:clean_trailing_whitespace",
         ],
     },
     classifiers=[
