@@ -4,6 +4,7 @@ import sys
 import logging
 import pkg_resources
 import argparse
+from .utils import should_ignore_directory
 
 logging.basicConfig(
     level=logging.INFO,
@@ -11,7 +12,7 @@ logging.basicConfig(
     stream=sys.stdout
 )
 
-supported_ext = tuple(
+supported_ext = tuple([
     ".py",
     ".js",
     ".ts",
@@ -22,10 +23,11 @@ supported_ext = tuple(
     ".rb",
     ".sh",
     ".rs",
+    ".cs",
     ".html",
     ".css"
     # ".php" # not supported. the only cleanup possible is deleting the entire codebase!
-)
+])
 
 def is_git_repository():
     """
@@ -55,17 +57,10 @@ def clean_file_trailing_whitespace(file_path):
         logging.error(f"Error processing {file_path}: {e}")
 
 
-def clean_entire_codebase():
-    """
-    Offer to clean up trailing whitespace for the entire codebase.
-    """
-    confirm = input("This directory is not a Git repository. Would you like to clean up trailing whitespace for all files in the codebase? (y/n): ").strip().lower()
-    if confirm != "y":
-        logging.info("Operation canceled.")
-        return
-
+def clean_entire_codebase(directory):
     logging.info("Cleaning up the entire codebase...")
-    for root, _, files in os.walk("."):
+    for root, dirs, files in os.walk(directory):
+        dirs[:] = [d for d in dirs if not should_ignore_directory(d)]
         for file in files:
             if file.endswith(supported_ext):
                 clean_file_trailing_whitespace(os.path.join(root, file))
@@ -75,6 +70,8 @@ def clean_entire_codebase():
 def clean_untracked_files():
     """
     Clean up trailing whitespace in all untracked files.
+    This function assumes that you manage your own gitignore such that:
+        no unwanted untracked items dangling around.
     """
     try:
         # Get the list of untracked files
@@ -147,6 +144,16 @@ def clean_tracked_files():
         except Exception as e:
             logging.error(f"Error processing {file}: {e}")
 
+def prompt_cleanall() -> bool:
+    """
+    Offer to clean up trailing whitespace for the entire codebase.
+    """
+    confirm = input("This directory is not a Git repository. Would you like to clean up trailing whitespace for all files in the codebase? (y/n): ").strip().lower()
+    if confirm != "y":
+        logging.info("Operation canceled.")
+        return False
+    return True
+
 
 def clean_trailing_whitespace():
     """
@@ -164,8 +171,15 @@ def clean_trailing_whitespace():
         help="Force clean the entire codebase even if it's a git repository"
     )
     args = parser.parse_args()
-    if not is_git_repository() or args.force_clean_all:
-        clean_entire_codebase()
+    directory = "."  # by default it takes current directory
+    if args.force_clean_all:
+        logging.info("Force clean!!!")
+        clean_entire_codebase(directory)
+        return
+
+    if not is_git_repository():
+        if prompt_cleanall():
+            clean_entire_codebase(directory)
         return
 
     logging.info("Start: Cleaning recently changed files.")
